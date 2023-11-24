@@ -57,6 +57,8 @@ class AnimateDiffOutput:
                 res.images = self._encode_video_to_b64(video_paths) + (frame_list if 'Frame' in params.format else [])
             else:
                 res.images = video_paths
+        elif 'Frame' in params.format:
+            res.images = frame_list
 
 
     def _add_reverse(self, params: AnimateDiffProcess, frame_list: list):
@@ -129,7 +131,7 @@ class AnimateDiffOutput:
                 frame_list.append(img)
         
         # if saving PNG, enforce saving to custom folder
-        if "PNG" in params.format:
+        if "PNG" in params.format and 'Frame' not in params.format:
             params.force_save_to_custom = True
 
         # remove tmp folder
